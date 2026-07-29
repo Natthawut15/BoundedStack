@@ -51,4 +51,25 @@ public class BoundedStack {
         this.CAPACITY = CAPACITY;
         checkRep();
     }
+     // ======= Mutator =======
+    /**
+     * param name เพิ่มรายชื่อ
+     * @t
+     * @hrows IllegalArgumentException ถ้า name เป็น Null , ถ้า name ว่าง , ถ้า Stack เต็ม 
+     */
+    public boolean push(String name) {
+        if(name == null) throw new IllegalArgumentException();
+        if(name.isEmpty()) throw new IllegalArgumentException();
+        if(Stack.size()== CAPACITY) return false;
+        Stack.add(name);
+        return true;
+    }
+    /**
+     * clear Stack
+     */
+    public void clear(){
+        if(Stack.size() <= 0) throw new IllegalArgumentException();
+        Stack.clear();
+        checkRep();
+    }
 }

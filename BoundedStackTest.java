@@ -119,4 +119,26 @@ public class BoundedStackTest {
         check("remove all -> empty", b.size() == 0);
         check("remove on empty BoundedStack -> returns false", !b.pop("A"));
      }
+     /**
+      * peek : Stack ต้องเท่ากับ 3
+      * เช็คว่าใน Stack มี A มั้ย
+      * เช็คว่าใน Stack มี Z มั้ย
+      * Stack ต้องเต็มอยู่
+      * Stack ต้องเท่ากับ before
+      */
+     private static void testpeek() {
+        System.out.println("\n-- peek --");
+
+        BoundedStack s = new BoundedStack(Arrays.asList("A", "B", "C"),3);
+        check("size reports 2", s.size() == 3);
+        check("contains finds an existing BoundedStack", s.Stack().contains("A"));
+        check("contains rejects a missing BoundedStack", !s.Stack().contains("Z"));
+        check("BoundedStack returns the full list in order",s.Stack().equals(Arrays.asList("A", "B", "C")));
+
+        int before = s.size();
+        s.size();
+        s.Stack().contains("A");
+        s.Stack();
+        check("observers have no side effects", s.size() == before);
+    }
 }

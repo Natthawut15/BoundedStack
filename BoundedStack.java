@@ -72,4 +72,28 @@ public class BoundedStack {
         Stack.clear();
         checkRep();
     }
+     //====== Producers ======        
+    /**
+     * 
+     * @throws IllegalArgumentException ถ้าข้อมูลที่จะลบไม่มีใน Stack
+     * @return ข้อมูลที่ลบไป
+     */
+    public boolean pop(String Stacks){
+        if(Stack.isEmpty()) throw new IllegalArgumentException();
+        if(!Stack.contains(Stacks)) return false;
+        Stack.remove(Stacks);
+        String remove = Stack.get(Stack.size()-1);
+        Stack.remove(Stack.size()-1);
+        System.out.println(remove);
+       return true;
+    }
+    /**
+     * @return ข้อมูลตัวสุดท้ายใน Stack
+     * @throws IllegalArgumentException ถ้า Stack ว่าง
+     */
+    public String peek(){
+        if(Stack.isEmpty()) throw new IllegalArgumentException();
+        String peek = Stack.get(Stack.size()-1) ;
+        return peek;
+    }
 }

@@ -96,4 +96,38 @@ public class BoundedStack {
         String peek = Stack.get(Stack.size()-1) ;
         return peek;
     }
+    //====== Observer ======
+    /**
+     * ตรวจสอบว่าใน Stack มีข้อมูลหรือไม่
+     * @return คืนค่า true ถ้าไม่มีข้อมูลใน Stack คืนค่า false ถ้ามีข้อมูลอย่างน้อย 1 ตัว
+     */
+    public boolean isEmpty(){
+        if(Stack.size() != 0) return false;
+        return true;
+    }
+    /**
+     * ตรวจสอบว่า Stack เต็มหรือไม่
+     * @return คืนค่า true ถ้า Stack เต็ม คืนค่า false ถ้ายังไม่เต็ม
+     */
+    public boolean isFull(){
+        if(Stack.size()!= CAPACITY) return false;
+        return true;
+    }
+    /**
+     * 
+     * @return จำนวนข้อมูลที่มีตอนนี้
+     */
+    public int size(){
+        return Stack.size();
+    }
+    /**
+     * 
+     * @return ความจุของ Stack
+     */
+    public int Capacity(){
+        return CAPACITY;
+    }
+    public List<String> Stack(){
+        return new ArrayList<>(Stack);
+    }
 }

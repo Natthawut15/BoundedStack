@@ -55,5 +55,44 @@ public class BoundedStackTest {
         BoundedStack isEmpty = new BoundedStack(0);
         check("new(isEmpty List) -> isEmpty", isEmpty.size()==0);
     }
+    //====== Mutator : เมื่อ push เเล้ว A เเล้ว ต้องมี A อยู่ใน Stack เเละขนาดเพิ่มเป็น 1 เเละเมื่อมี Input เข้ามาหลายตัว ต้องมีทุกตัวที่ Input เข้ามา
+    private static void testpush(){
+        System.out.println("-- Push --");
+        BoundedStack S = new BoundedStack(50);
+        check("Push(A) -> return true", S.push("A"));
+        check("Push(A) -> size 1", S.size() == 1);
+        S.push("B");
+        S.push("C");
+        check("add preserves insertion order", S.Stack().equals(Arrays.asList("A", "B", "C")));
+        /**   
+        *ถ้าใส่ค่าว่าง โยน Exception */
 
+         boolean threwEmpty = false;
+        try {
+            S.push("");
+        } catch (IllegalArgumentException e) {
+            threwEmpty = true;
+        }
+        check("add(empty string) -> throws IllegalArgumentException", threwEmpty);
+        /**
+        *ถ้าใส่ค่า Null โยน Exception 
+        */
+        boolean threwNull = false;
+        try {
+            S.push(null);
+        } catch (IllegalArgumentException e) {
+            threwNull = true;
+        }
+        check("add(null) -> throws IllegalArgumentException", threwNull);
+        
+        // boundary: เติมจนเต็มพอดีแล้วเติมเพิ่ม
+        BoundedStack full = new BoundedStack(50);
+        for (int i = 0; i < 50 ; i++) {
+            full.push("song" + i);
+        }
+        check("can fill up to CAPACITY", full.size() == 50);
+        check("add when full -> returns false", !full.push("one more"));
+        check("full Boundedstack stays at CAPACITY", full.size() == 50);
+
+    }
 }

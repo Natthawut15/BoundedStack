@@ -140,5 +140,40 @@ public class BoundedStackTest {
         s.Stack().contains("A");
         s.Stack();
         check("observers have no side effects", s.size() == before);
+    
+    }
+    // --- ทดสอบว่าไม่เกิด representation exposure ---
+
+
+         private static void testExposure() {
+        System.out.println("\n-- Representation Exposure --");
+
+        // ขาออก: แก้ list ที่ได้จาก Stack() ต้องไม่กระทบ rep
+        BoundedStack s = new BoundedStack(50);
+        s.push("A");
+
+        List<String> got = s.Stack();
+        got.clear();
+        check("clearing result of Stack() does not affect BoundedStack",
+                s.size() == 1);
+
+        got = s.Stack();
+        got.add("injected");
+        check("adding to result of Stack() does not affect BoundedStack", s.size() == 1 && !s.Stack().contains("injected"));
+
+        // สองครั้งต้องเป็นคนละ object
+        check("Stack() returns a fresh list each call", s.Stack() != s.Stack());
+
+        // ขาเข้า: แก้ list ที่ส่งให้ constructor ต้องไม่กระทบ rep
+        List<String> input = new ArrayList<String>(Arrays.asList("A", "B"));
+        BoundedStack p = new BoundedStack(input,50);
+
+        input.clear();
+        check("clearing constructor argument does not affect ",
+                p.size() == 2);
+
+        input.add("injected");
+        check("adding to constructor argument does not affect BoundedStack",
+                !p.Stack().contains("injected"));
     }
 }

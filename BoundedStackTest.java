@@ -93,6 +93,30 @@ public class BoundedStackTest {
         check("can fill up to CAPACITY", full.size() == 50);
         check("add when full -> returns false", !full.push("one more"));
         check("full Boundedstack stays at CAPACITY", full.size() == 50);
-
     }
+    
+    /**
+         * pop : ลบ B ออกจากจาก Stack แล้วเช็คว่ายังมี B ใน Stack มั้ย
+         * ลบ B ออกไป 1 ตัวแล้ว Stack ต้องเท่ากับ 2
+         * ลบ B ออกไปแล้วต้องเหลือ A B
+         * ลบไม่ได้ให้ return false
+         * ลบ A C แล้วต้องเหลือใน Stack == 0
+         * ถ้าลบว่างเปล่าให้ return false
+         */
+     private static void testPop(){
+        System.out.println("-- Pop --");
+        BoundedStack b = new BoundedStack(Arrays.asList("A","B","C"),3);
+        check("pop(B) -> returns true", b.pop("B"));
+        check("B is removed",!b.Stack().contains("B"));
+        check("size -> 2", b.size() == 2);
+        check("remaining data",b.Stack().equals(Arrays.asList("A", "C")));
+
+        check("remove missing BoundedStack -> returns false", !b.pop("nope"));
+        check("failed remove leaves size unchanged", b.size() == 2);
+
+        b.pop("A");
+        b.pop("C");
+        check("remove all -> empty", b.size() == 0);
+        check("remove on empty BoundedStack -> returns false", !b.pop("A"));
+     }
 }

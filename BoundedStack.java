@@ -1,4 +1,5 @@
 import java.util.*;
+
 /**
  * BoundedStack นี้คือ การเก็บรายชื่อเเละไม่เก็บได้ไม่เกินความจุที่มี สร้าง Stack เพื่อใช้เก็บชื่อ ขึ้นมาเเละ CAPACITY เพื่อกำหนดขนาดที่จะเก็บได้
  * มีการตรวจสอบเงื่อนไขว่า Stack ต้องไม่เป็น Null , ไม่ว่าง , ไม่เกิน , CAPACITY
@@ -15,7 +16,7 @@ public class BoundedStack {
 
     private final List<String> Stack;
     private final int CAPACITY;
-    
+
     // AF(Stack,CAPACITY) คิอ คลาสนี้ป็นการเก็บชื่อจริงของ User
     // เละไม่เกินค่าที่กำหนด
     // RI
@@ -25,10 +26,9 @@ public class BoundedStack {
 
     public void checkRep() {
         assert Stack != null : "Stack is not Null";
-        assert !Stack.isEmpty();
+        //assert !Stack.isEmpty();
         assert Stack.size() <= CAPACITY ;
     }
-    
         // ======= Creater =======
     /**
      * 
@@ -51,11 +51,11 @@ public class BoundedStack {
         this.CAPACITY = CAPACITY;
         checkRep();
     }
-     // ======= Mutator =======
+        // ======= Mutator =======
     /**
-     * param name เพิ่มรายชื่อ
-     * @t
-     * @hrows IllegalArgumentException ถ้า name เป็น Null , ถ้า name ว่าง , ถ้า Stack เต็ม 
+     * 
+     * @param name เพิ่มรายชื่อ
+     * @throws IllegalArgumentException ถ้า name เป็น Null , ถ้า name ว่าง , ถ้า Stack เต็ม 
      */
     public boolean push(String name) {
         if(name == null) throw new IllegalArgumentException();
@@ -72,19 +72,15 @@ public class BoundedStack {
         Stack.clear();
         checkRep();
     }
-     //====== Producers ======        
+        //====== Producers ======        
     /**
      * 
      * @throws IllegalArgumentException ถ้าข้อมูลที่จะลบไม่มีใน Stack
      * @return ข้อมูลที่ลบไป
      */
     public boolean pop(String Stacks){
-        if(Stack.isEmpty()) throw new IllegalArgumentException();
         if(!Stack.contains(Stacks)) return false;
         Stack.remove(Stacks);
-        String remove = Stack.get(Stack.size()-1);
-        Stack.remove(Stack.size()-1);
-        System.out.println(remove);
        return true;
     }
     /**
@@ -96,7 +92,7 @@ public class BoundedStack {
         String peek = Stack.get(Stack.size()-1) ;
         return peek;
     }
-    //====== Observer ======
+        //====== Observer ======
     /**
      * ตรวจสอบว่าใน Stack มีข้อมูลหรือไม่
      * @return คืนค่า true ถ้าไม่มีข้อมูลใน Stack คืนค่า false ถ้ามีข้อมูลอย่างน้อย 1 ตัว
@@ -131,3 +127,4 @@ public class BoundedStack {
         return new ArrayList<>(Stack);
     }
 }
+

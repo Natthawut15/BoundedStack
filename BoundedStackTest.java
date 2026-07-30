@@ -29,7 +29,15 @@ public class BoundedStackTest {
 
         System.out.println("===  BoundedStack Suite ===\n");
         testCreators();
-     
+        testpush();
+        testPop();
+        testpeek();
+        testExposure();
+
+
+
+
+        
         System.out.println("\n=== Summary ===");
         System.out.println("Passed: " + passed);
         System.out.println("Failed: " + failed);
@@ -40,11 +48,7 @@ public class BoundedStackTest {
             System.exit(1);
         }
     }
-    /**
-     * Test Creator เมื่อสร้างเเล้ว Stack ต้องเท่ากับ 0
-     * ตรวจสอบว่าใน Stack ว่างไหม
-     * */
-
+ 
     private static void testCreators() {
         System.out.println("-- Creators --");
 
@@ -55,7 +59,8 @@ public class BoundedStackTest {
         BoundedStack isEmpty = new BoundedStack(0);
         check("new(isEmpty List) -> isEmpty", isEmpty.size()==0);
     }
-    //====== Mutator : เมื่อ push เเล้ว A เเล้ว ต้องมี A อยู่ใน Stack เเละขนาดเพิ่มเป็น 1 เเละเมื่อมี Input เข้ามาหลายตัว ต้องมีทุกตัวที่ Input เข้ามา
+
+    //====== Mutator : push ต้อง
     private static void testpush(){
         System.out.println("-- Push --");
         BoundedStack S = new BoundedStack(50);
@@ -64,8 +69,6 @@ public class BoundedStackTest {
         S.push("B");
         S.push("C");
         check("add preserves insertion order", S.Stack().equals(Arrays.asList("A", "B", "C")));
-        /**   
-        *ถ้าใส่ค่าว่าง โยน Exception */
 
          boolean threwEmpty = false;
         try {
@@ -74,9 +77,6 @@ public class BoundedStackTest {
             threwEmpty = true;
         }
         check("add(empty string) -> throws IllegalArgumentException", threwEmpty);
-        /**
-        *ถ้าใส่ค่า Null โยน Exception 
-        */
         boolean threwNull = false;
         try {
             S.push(null);
@@ -93,16 +93,10 @@ public class BoundedStackTest {
         check("can fill up to CAPACITY", full.size() == 50);
         check("add when full -> returns false", !full.push("one more"));
         check("full Boundedstack stays at CAPACITY", full.size() == 50);
+
+
+
     }
-    
-    /**
-         * pop : ลบ B ออกจากจาก Stack แล้วเช็คว่ายังมี B ใน Stack มั้ย
-         * ลบ B ออกไป 1 ตัวแล้ว Stack ต้องเท่ากับ 2
-         * ลบ B ออกไปแล้วต้องเหลือ A B
-         * ลบไม่ได้ให้ return false
-         * ลบ A C แล้วต้องเหลือใน Stack == 0
-         * ถ้าลบว่างเปล่าให้ return false
-         */
      private static void testPop(){
         System.out.println("-- Pop --");
         BoundedStack b = new BoundedStack(Arrays.asList("A","B","C"),3);
@@ -119,13 +113,6 @@ public class BoundedStackTest {
         check("remove all -> empty", b.size() == 0);
         check("remove on empty BoundedStack -> returns false", !b.pop("A"));
      }
-     /**
-      * peek : Stack ต้องเท่ากับ 3
-      * เช็คว่าใน Stack มี A มั้ย
-      * เช็คว่าใน Stack มี Z มั้ย
-      * Stack ต้องเต็มอยู่
-      * Stack ต้องเท่ากับ before
-      */
      private static void testpeek() {
         System.out.println("\n-- peek --");
 
@@ -138,12 +125,12 @@ public class BoundedStackTest {
         int before = s.size();
         s.size();
         s.Stack().contains("A");
-        s.Stack();
+        s.Stack();s.Stack();
         check("observers have no side effects", s.size() == before);
-    
-    }
-    // --- ทดสอบว่าไม่เกิด representation exposure ---
 
+        // --- ทดสอบว่าไม่เกิด representation exposure ---
+
+     }
 
          private static void testExposure() {
         System.out.println("\n-- Representation Exposure --");
@@ -159,10 +146,12 @@ public class BoundedStackTest {
 
         got = s.Stack();
         got.add("injected");
-        check("adding to result of Stack() does not affect BoundedStack", s.size() == 1 && !s.Stack().contains("injected"));
+        check("adding to result of Stack() does not affect BoundedStack",
+                s.size() == 1 && !s.Stack().contains("injected"));
 
         // สองครั้งต้องเป็นคนละ object
-        check("Stack() returns a fresh list each call", s.Stack() != s.Stack());
+        check("songs() returns a fresh list each call",
+                s.Stack() != s.Stack());
 
         // ขาเข้า: แก้ list ที่ส่งให้ constructor ต้องไม่กระทบ rep
         List<String> input = new ArrayList<String>(Arrays.asList("A", "B"));
